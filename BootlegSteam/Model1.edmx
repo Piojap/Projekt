@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="steamdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="dev">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="picture" Type="varbinary(max)" Nullable="false" />
+          <Property Name="playerid" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="game">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="creation" Type="date" Nullable="false" />
+          <Property Name="score" Type="bigint" Nullable="false" />
+          <Property Name="picture" Type="varbinary(max)" Nullable="false" />
+          <Property Name="genreid" Type="bigint" Nullable="false" />
+          <Property Name="devid" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="genre">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="icon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="picture" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="player">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="creation" Type="date" Nullable="false" />
+          <Property Name="iconid" Type="bigint" Nullable="false" />
+          <Property Name="statid" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="stat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="timespent" Type="bigint" Nullable="false" />
+          <Property Name="perfectgame" Type="bigint" Nullable="false" />
+          <Property Name="acclevel" Type="bigint" Nullable="false" />
+          <Property Name="moneyspent" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_dev_player">
+          <End Role="player" Type="Self.player" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="dev" Type="Self.dev" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="player">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dev">
+              <PropertyRef Name="playerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_game_dev">
+          <End Role="dev" Type="Self.dev" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="game" Type="Self.game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dev">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="game">
+              <PropertyRef Name="devid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_game_genre">
+          <End Role="genre" Type="Self.genre" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="game" Type="Self.game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="game">
+              <PropertyRef Name="genreid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_player_icon">
+          <End Role="icon" Type="Self.icon" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="player" Type="Self.player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="icon">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="player">
+              <PropertyRef Name="iconid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_player_stat">
+          <End Role="stat" Type="Self.stat" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="player" Type="Self.player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="stat">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="player">
+              <PropertyRef Name="statid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="steamdbModelStoreContainer">
+          <EntitySet Name="dev" EntityType="Self.dev" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="game" EntityType="Self.game" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="genre" EntityType="Self.genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="icon" EntityType="Self.icon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="player" EntityType="Self.player" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="stat" EntityType="Self.stat" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_dev_player" Association="Self.fk_dev_player">
+            <End Role="player" EntitySet="player" />
+            <End Role="dev" EntitySet="dev" />
+          </AssociationSet>
+          <AssociationSet Name="fk_game_dev" Association="Self.fk_game_dev">
+            <End Role="dev" EntitySet="dev" />
+            <End Role="game" EntitySet="game" />
+          </AssociationSet>
+          <AssociationSet Name="fk_game_genre" Association="Self.fk_game_genre">
+            <End Role="genre" EntitySet="genre" />
+            <End Role="game" EntitySet="game" />
+          </AssociationSet>
+          <AssociationSet Name="fk_player_icon" Association="Self.fk_player_icon">
+            <End Role="icon" EntitySet="icon" />
+            <End Role="player" EntitySet="player" />
+          </AssociationSet>
+          <AssociationSet Name="fk_player_stat" Association="Self.fk_player_stat">
+            <End Role="stat" EntitySet="stat" />
+            <End Role="player" EntitySet="player" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="steamdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="dev">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="playerid" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="player" Relationship="Self.fk_dev_player" FromRole="dev" ToRole="player" />
+          <NavigationProperty Name="games" Relationship="Self.fk_game_dev" FromRole="dev" ToRole="game" />
+        </EntityType>
+        <EntityType Name="game">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="creation" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="score" Type="Int64" Nullable="false" />
+          <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="genreid" Type="Int64" Nullable="false" />
+          <Property Name="devid" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="dev" Relationship="Self.fk_game_dev" FromRole="game" ToRole="dev" />
+          <NavigationProperty Name="genre" Relationship="Self.fk_game_genre" FromRole="game" ToRole="genre" />
+        </EntityType>
+        <EntityType Name="genre">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="games" Relationship="Self.fk_game_genre" FromRole="genre" ToRole="game" />
+        </EntityType>
+        <EntityType Name="icon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="players" Relationship="Self.fk_player_icon" FromRole="icon" ToRole="player" />
+        </EntityType>
+        <EntityType Name="player">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="creation" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="iconid" Type="Int64" Nullable="false" />
+          <Property Name="statid" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="devs" Relationship="Self.fk_dev_player" FromRole="player" ToRole="dev" />
+          <NavigationProperty Name="icon" Relationship="Self.fk_player_icon" FromRole="player" ToRole="icon" />
+          <NavigationProperty Name="stat" Relationship="Self.fk_player_stat" FromRole="player" ToRole="stat" />
+        </EntityType>
+        <EntityType Name="stat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="timespent" Type="Int64" Nullable="false" />
+          <Property Name="perfectgame" Type="Int64" Nullable="false" />
+          <Property Name="acclevel" Type="Int64" Nullable="false" />
+          <Property Name="moneyspent" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="players" Relationship="Self.fk_player_stat" FromRole="stat" ToRole="player" />
+        </EntityType>
+        <Association Name="fk_dev_player">
+          <End Role="player" Type="Self.player" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="dev" Type="Self.dev" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="player">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dev">
+              <PropertyRef Name="playerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_game_dev">
+          <End Role="dev" Type="Self.dev" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="game" Type="Self.game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dev">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="game">
+              <PropertyRef Name="devid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_game_genre">
+          <End Role="genre" Type="Self.genre" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="game" Type="Self.game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="game">
+              <PropertyRef Name="genreid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_player_icon">
+          <End Role="icon" Type="Self.icon" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="player" Type="Self.player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="icon">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="player">
+              <PropertyRef Name="iconid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_player_stat">
+          <End Role="stat" Type="Self.stat" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="player" Type="Self.player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="stat">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="player">
+              <PropertyRef Name="statid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="steamdbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="devs" EntityType="Self.dev" />
+          <EntitySet Name="games" EntityType="Self.game" />
+          <EntitySet Name="genres" EntityType="Self.genre" />
+          <EntitySet Name="icons" EntityType="Self.icon" />
+          <EntitySet Name="players" EntityType="Self.player" />
+          <EntitySet Name="stats" EntityType="Self.stat" />
+          <AssociationSet Name="fk_dev_player" Association="Self.fk_dev_player">
+            <End Role="player" EntitySet="players" />
+            <End Role="dev" EntitySet="devs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_game_dev" Association="Self.fk_game_dev">
+            <End Role="dev" EntitySet="devs" />
+            <End Role="game" EntitySet="games" />
+          </AssociationSet>
+          <AssociationSet Name="fk_game_genre" Association="Self.fk_game_genre">
+            <End Role="genre" EntitySet="genres" />
+            <End Role="game" EntitySet="games" />
+          </AssociationSet>
+          <AssociationSet Name="fk_player_icon" Association="Self.fk_player_icon">
+            <End Role="icon" EntitySet="icons" />
+            <End Role="player" EntitySet="players" />
+          </AssociationSet>
+          <AssociationSet Name="fk_player_stat" Association="Self.fk_player_stat">
+            <End Role="stat" EntitySet="stats" />
+            <End Role="player" EntitySet="players" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="steamdbModelStoreContainer" CdmEntityContainer="steamdbEntities">
+          <EntitySetMapping Name="devs">
+            <EntityTypeMapping TypeName="steamdbModel.dev">
+              <MappingFragment StoreEntitySet="dev">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+                <ScalarProperty Name="playerid" ColumnName="playerid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="games">
+            <EntityTypeMapping TypeName="steamdbModel.game">
+              <MappingFragment StoreEntitySet="game">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="creation" ColumnName="creation" />
+                <ScalarProperty Name="score" ColumnName="score" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+                <ScalarProperty Name="genreid" ColumnName="genreid" />
+                <ScalarProperty Name="devid" ColumnName="devid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="genres">
+            <EntityTypeMapping TypeName="steamdbModel.genre">
+              <MappingFragment StoreEntitySet="genre">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="icons">
+            <EntityTypeMapping TypeName="steamdbModel.icon">
+              <MappingFragment StoreEntitySet="icon">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="players">
+            <EntityTypeMapping TypeName="steamdbModel.player">
+              <MappingFragment StoreEntitySet="player">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="creation" ColumnName="creation" />
+                <ScalarProperty Name="iconid" ColumnName="iconid" />
+                <ScalarProperty Name="statid" ColumnName="statid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="stats">
+            <EntityTypeMapping TypeName="steamdbModel.stat">
+              <MappingFragment StoreEntitySet="stat">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="timespent" ColumnName="timespent" />
+                <ScalarProperty Name="perfectgame" ColumnName="perfectgame" />
+                <ScalarProperty Name="acclevel" ColumnName="acclevel" />
+                <ScalarProperty Name="moneyspent" ColumnName="moneyspent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
