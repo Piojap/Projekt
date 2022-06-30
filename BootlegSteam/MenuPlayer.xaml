@@ -53,7 +53,7 @@
             <Button Height="25" Width="25" Click="clkclose" Grid.Column="4" Grid.Row="0" Margin="15,10,10,0" />
             <Button Height="25" Width="25" Click="clkmaximize" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" Margin="545,10,45,0"/>
             <Button Height="25" Width="25" Click="clkminimize" Grid.Column="3" Grid.Row="0" Margin="510,10,30,0"/>
-            <Button Height="25" Width="25" Grid.Column="3" Grid.Row="0" Margin="475,10,65,0"/>
+            <Button Height="25" Width="25" Click="clkback" Grid.Column="3" Grid.Row="0" Margin="475,10,65,0"/>
             <Button Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="30,0,475,0"/>
             <Button Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="120,0,385,0"/>
             <Button Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="210,0,295,0"/>

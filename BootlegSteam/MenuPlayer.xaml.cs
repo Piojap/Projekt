@@ -27,6 +27,7 @@ namespace BootlegSteam
         private void clkclose(object sender, RoutedEventArgs e)
         {
             Close();
+            App.Current.Shutdown();
         }
 
         private void clkmaximize(object sender, RoutedEventArgs e)
@@ -46,6 +47,13 @@ namespace BootlegSteam
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private void clkback(object sender, RoutedEventArgs e)
+        {
+            MenuMain open = new MenuMain();
+            open.Visibility = Visibility.Visible;
+            Close();
         }
     }
 }

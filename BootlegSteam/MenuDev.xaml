@@ -5,8 +5,68 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BootlegSteam"
         mc:Ignorable="d"
-        Title="MenuDev" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        MouseDown="dragwindow"
+        Height="720"
+        Width="1280"
+        Title="MenuDev">
+    <Viewbox>
+        <Grid ShowGridLines="True">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Height" Value="60"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Width" Value="115"/>
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Height" Value="60"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Width" Value="400"/>
+                </Style>
+            </Grid.Resources>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+                <ColumnDefinition Width="565"></ColumnDefinition>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+                <ColumnDefinition Width="565"></ColumnDefinition>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="58"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="58"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="58"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="58"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="58"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Button Height="25" Width="25" Click="clkclose" Grid.Column="4" Grid.Row="0" Margin="15,10,10,0" />
+            <Button Height="25" Width="25" Click="clkmaximize" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" Margin="545,10,45,0"/>
+            <Button Height="25" Width="25" Click="clkminimize" Grid.Column="3" Grid.Row="0" Margin="510,10,30,0"/>
+            <Button Height="25" Width="25" Click="clkback" Grid.Column="3" Grid.Row="0" Margin="475,10,65,0"/>
+            <Button Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="30,0,475,0"/>
+            <Button Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="120,0,385,0"/>
+            <Button Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="210,0,295,0"/>
+
+            <ComboBox Height="60" Width="565" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <Image Height="178" Width="178" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3" VerticalAlignment="Top" Stretch="Fill"/>
+
+            <Label Grid.Column="1" Content="USERNAME" HorizontalAlignment="Left" Grid.Row="7" Margin="308,0,0,0"/>
+
+            <TextBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="7" TextWrapping="Wrap" Text="" Grid.ColumnSpan="3" Margin="472,0,0,0"/>
+            <Button Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Row="9" Width="565"/>
+            <Button Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Row="11" Width="565"/>
+        </Grid>
+    </Viewbox>
 </Window>

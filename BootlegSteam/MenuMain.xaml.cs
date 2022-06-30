@@ -55,6 +55,7 @@ namespace BootlegSteam
         private void clkclose(object sender, RoutedEventArgs e)
         {
             Close();
+            App.Current.Shutdown();
         }
 
         private void clkmaximize(object sender, RoutedEventArgs e)
