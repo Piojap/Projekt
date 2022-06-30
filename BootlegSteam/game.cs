@@ -19,10 +19,8 @@ namespace BootlegSteam
         public System.DateTime creation { get; set; }
         public long score { get; set; }
         public byte[] picture { get; set; }
-        public long genreid { get; set; }
         public long devid { get; set; }
     
         public virtual dev dev { get; set; }
-        public virtual genre genre { get; set; }
     }
 }

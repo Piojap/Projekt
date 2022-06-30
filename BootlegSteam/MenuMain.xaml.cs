@@ -38,16 +38,16 @@ namespace BootlegSteam
             open.Show();
         }
 
-        private void clkmenuicon(object sender, RoutedEventArgs e)
+        private void clkmenudev(object sender, RoutedEventArgs e)
         {
-            MenuIcon open = new MenuIcon();
+            MenuDev open = new MenuDev();
             this.Visibility = Visibility.Hidden;
             open.Show();
         }
 
-        private void clkmenugenre(object sender, RoutedEventArgs e)
+        private void clkmenuicon(object sender, RoutedEventArgs e)
         {
-            MenuGenre open = new MenuGenre();
+            MenuIcon open = new MenuIcon();
             this.Visibility = Visibility.Hidden;
             open.Show();
         }

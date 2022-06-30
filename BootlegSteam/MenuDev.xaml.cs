@@ -17,9 +17,9 @@ namespace BootlegSteam
     /// <summary>
     /// Interaction logic for MenuGenre.xaml
     /// </summary>
-    public partial class MenuGenre : Window
+    public partial class MenuDev : Window
     {
-        public MenuGenre()
+        public MenuDev()
         {
             InitializeComponent();
         }

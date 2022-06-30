@@ -23,7 +23,6 @@ namespace BootlegSteam
         public long timespent { get; set; }
         public long perfectgame { get; set; }
         public long acclevel { get; set; }
-        public long moneyspent { get; set; }
     
         public virtual ICollection<player> players { get; set; }
     }

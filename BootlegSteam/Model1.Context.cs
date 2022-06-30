@@ -27,7 +27,6 @@ namespace BootlegSteam
     
         public DbSet<dev> devs { get; set; }
         public DbSet<game> games { get; set; }
-        public DbSet<genre> genres { get; set; }
         public DbSet<icon> icons { get; set; }
         public DbSet<player> players { get; set; }
         public DbSet<stat> stats { get; set; }
