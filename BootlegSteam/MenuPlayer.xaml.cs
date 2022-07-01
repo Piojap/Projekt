@@ -96,33 +96,45 @@ namespace BootlegSteam
 
         private void refresh_Click(object sender, RoutedEventArgs e)
         {
-            steamdbEntities db = new steamdbEntities();
-            List<player> lst = db.players.ToList();
-            comboplayers.ItemsSource = lst;
+            bindcombo();
         }
+
+        private long updateplayerid;
 
         private void updateplayer_Click(object sender, RoutedEventArgs e)
         {
             steamdbEntities db = new steamdbEntities();
 
             var r = from p in db.players
-                    where p.id == 1
+                    where p.id == this.updateplayerid
                     select p;
 
-            foreach (var item in r)
+            player obj = r.SingleOrDefault();
+
+            if (obj != null)
             {
-                item.title = "asd";
+                obj.title = valtitle.Text;
+                obj.creation = Convert.ToDateTime(valcreation.Text);
+                obj.stat.timespent = Convert.ToInt64(valtime.Text);
+                obj.stat.perfectgame = Convert.ToInt64(valperfect.Text);
+                obj.stat.acclevel = Convert.ToInt64(vallevel.Value);
             }
+            db.SaveChanges();
         }
 
         private void comboplayers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
             player p = (player)this.comboplayers.SelectedItem;
-            valtitle.Text = p.title;
-            valcreation.Text = Convert.ToString(p.creation);
-            valtime.Text = Convert.ToString(p.stat.timespent);
-            valperfect.Text = Convert.ToString(p.stat.perfectgame);
-            vallevel.Value = p.stat.acclevel;                          
+            if (p != null)
+            {
+                valtitle.Text = p.title;
+                valcreation.Text = Convert.ToString(p.creation);
+                valtime.Text = Convert.ToString(p.stat.timespent);
+                valperfect.Text = Convert.ToString(p.stat.perfectgame);
+                vallevel.Value = p.stat.acclevel;
+                this.updateplayerid = p.id;
+            }
         }
     }
 }
