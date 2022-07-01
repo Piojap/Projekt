@@ -23,15 +23,7 @@
           <Property Name="creation" Type="date" Nullable="false" />
           <Property Name="score" Type="bigint" Nullable="false" />
           <Property Name="picture" Type="varbinary(max)" Nullable="false" />
-          <Property Name="genreid" Type="bigint" Nullable="false" />
           <Property Name="devid" Type="bigint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="genre">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="icon">
           <Key>
@@ -58,7 +50,6 @@
           <Property Name="timespent" Type="bigint" Nullable="false" />
           <Property Name="perfectgame" Type="bigint" Nullable="false" />
           <Property Name="acclevel" Type="bigint" Nullable="false" />
-          <Property Name="moneyspent" Type="bigint" Nullable="false" />
         </EntityType>
         <Association Name="fk_dev_player">
           <End Role="player" Type="Self.player" Multiplicity="1">
@@ -85,20 +76,6 @@
             </Principal>
             <Dependent Role="game">
               <PropertyRef Name="devid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_game_genre">
-          <End Role="genre" Type="Self.genre" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="game" Type="Self.game" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genre">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="game">
-              <PropertyRef Name="genreid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -133,7 +110,6 @@
         <EntityContainer Name="steamdbModelStoreContainer">
           <EntitySet Name="dev" EntityType="Self.dev" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="game" EntityType="Self.game" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="genre" EntityType="Self.genre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="icon" EntityType="Self.icon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="player" EntityType="Self.player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stat" EntityType="Self.stat" Schema="dbo" store:Type="Tables" />
@@ -143,10 +119,6 @@
           </AssociationSet>
           <AssociationSet Name="fk_game_dev" Association="Self.fk_game_dev">
             <End Role="dev" EntitySet="dev" />
-            <End Role="game" EntitySet="game" />
-          </AssociationSet>
-          <AssociationSet Name="fk_game_genre" Association="Self.fk_game_genre">
-            <End Role="genre" EntitySet="genre" />
             <End Role="game" EntitySet="game" />
           </AssociationSet>
           <AssociationSet Name="fk_player_icon" Association="Self.fk_player_icon">
@@ -183,18 +155,8 @@
           <Property Name="creation" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="score" Type="Int64" Nullable="false" />
           <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="genreid" Type="Int64" Nullable="false" />
           <Property Name="devid" Type="Int64" Nullable="false" />
           <NavigationProperty Name="dev" Relationship="Self.fk_game_dev" FromRole="game" ToRole="dev" />
-          <NavigationProperty Name="genre" Relationship="Self.fk_game_genre" FromRole="game" ToRole="genre" />
-        </EntityType>
-        <EntityType Name="genre">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="games" Relationship="Self.fk_game_genre" FromRole="genre" ToRole="game" />
         </EntityType>
         <EntityType Name="icon">
           <Key>
@@ -225,7 +187,6 @@
           <Property Name="timespent" Type="Int64" Nullable="false" />
           <Property Name="perfectgame" Type="Int64" Nullable="false" />
           <Property Name="acclevel" Type="Int64" Nullable="false" />
-          <Property Name="moneyspent" Type="Int64" Nullable="false" />
           <NavigationProperty Name="players" Relationship="Self.fk_player_stat" FromRole="stat" ToRole="player" />
         </EntityType>
         <Association Name="fk_dev_player">
@@ -253,20 +214,6 @@
             </Principal>
             <Dependent Role="game">
               <PropertyRef Name="devid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_game_genre">
-          <End Role="genre" Type="Self.genre" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="game" Type="Self.game" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genre">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="game">
-              <PropertyRef Name="genreid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -301,7 +248,6 @@
         <EntityContainer Name="steamdbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="devs" EntityType="Self.dev" />
           <EntitySet Name="games" EntityType="Self.game" />
-          <EntitySet Name="genres" EntityType="Self.genre" />
           <EntitySet Name="icons" EntityType="Self.icon" />
           <EntitySet Name="players" EntityType="Self.player" />
           <EntitySet Name="stats" EntityType="Self.stat" />
@@ -311,10 +257,6 @@
           </AssociationSet>
           <AssociationSet Name="fk_game_dev" Association="Self.fk_game_dev">
             <End Role="dev" EntitySet="devs" />
-            <End Role="game" EntitySet="games" />
-          </AssociationSet>
-          <AssociationSet Name="fk_game_genre" Association="Self.fk_game_genre">
-            <End Role="genre" EntitySet="genres" />
             <End Role="game" EntitySet="games" />
           </AssociationSet>
           <AssociationSet Name="fk_player_icon" Association="Self.fk_player_icon">
@@ -350,16 +292,7 @@
                 <ScalarProperty Name="creation" ColumnName="creation" />
                 <ScalarProperty Name="score" ColumnName="score" />
                 <ScalarProperty Name="picture" ColumnName="picture" />
-                <ScalarProperty Name="genreid" ColumnName="genreid" />
                 <ScalarProperty Name="devid" ColumnName="devid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="genres">
-            <EntityTypeMapping TypeName="steamdbModel.genre">
-              <MappingFragment StoreEntitySet="genre">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="title" ColumnName="title" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -389,7 +322,6 @@
                 <ScalarProperty Name="timespent" ColumnName="timespent" />
                 <ScalarProperty Name="perfectgame" ColumnName="perfectgame" />
                 <ScalarProperty Name="acclevel" ColumnName="acclevel" />
-                <ScalarProperty Name="moneyspent" ColumnName="moneyspent" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
