@@ -100,5 +100,29 @@ namespace BootlegSteam
             List<player> lst = db.players.ToList();
             comboplayers.ItemsSource = lst;
         }
+
+        private void updateplayer_Click(object sender, RoutedEventArgs e)
+        {
+            steamdbEntities db = new steamdbEntities();
+
+            var r = from p in db.players
+                    where p.id == 1
+                    select p;
+
+            foreach (var item in r)
+            {
+                item.title = "asd";
+            }
+        }
+
+        private void comboplayers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            player p = (player)this.comboplayers.SelectedItem;
+            valtitle.Text = p.title;
+            valcreation.Text = Convert.ToString(p.creation);
+            valtime.Text = Convert.ToString(p.stat.timespent);
+            valperfect.Text = Convert.ToString(p.stat.perfectgame);
+            vallevel.Value = p.stat.acclevel;                          
+        }
     }
 }

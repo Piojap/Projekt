@@ -55,11 +55,11 @@
             <Button Height="25" Width="25" Click="clkminimize" Grid.Column="3" Grid.Row="0" Margin="510,10,30,0"/>
             <Button Height="25" Width="25" Click="clkback" Grid.Column="3" Grid.Row="0" Margin="475,10,65,0"/>
             <Button x:Name="addplayer" Click="addplayer_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="30,0,475,0"/>
-            <Button Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="120,0,385,0"/>
+            <Button x:Name="updateplayer" Click="updateplayer_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="120,0,385,0"/>
             <Button Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="210,0,295,0"/>
             <Button x:Name="refresh" Click="refresh_Click" Height="60" Width="60" Grid.Column="3" Grid.Row="1" Margin="295,0,210,0"/>
 
-            <ComboBox Name="comboplayers" DisplayMemberPath="title" SelectedValuePath="id" SelectedValue="{Binding id}" Height="60" Width="565" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ComboBox Name="comboplayers" DisplayMemberPath="title" SelectedValuePath="id" SelectedValue="{Binding id}" Height="60" Width="565" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="comboplayers_SelectionChanged"/>
 
             <Image Height="178" Width="178" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3" VerticalAlignment="Top" Stretch="Fill"/>
 
