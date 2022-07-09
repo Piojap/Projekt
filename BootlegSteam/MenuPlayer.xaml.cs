@@ -65,6 +65,13 @@ namespace BootlegSteam
             Close();
         }
 
+        private void refresh_Click(object sender, RoutedEventArgs e)
+        {
+            bindcombo();
+        }
+
+        private long updateplayerid;
+
         private void addplayer_Click(object sender, RoutedEventArgs e)
         {
             steamdbEntities db = new steamdbEntities();
@@ -76,10 +83,13 @@ namespace BootlegSteam
             };
             db.stats.Add(sobj);
 
-            List<stat> statlst = db.stats.ToList();
+            db.SaveChanges();
+            steamdbEntities db2 = new steamdbEntities();
+
+            List<stat> statlst = db2.stats.ToList();
             var laststatlst = statlst.Last();
 
-            List<icon> iconlst = db.icons.ToList();
+            List<icon> iconlst = db2.icons.ToList();
             var lasticonlst = statlst.First();
 
             player pobj = new player()
@@ -89,17 +99,11 @@ namespace BootlegSteam
                 statid = laststatlst.id,
                 iconid = lasticonlst.id
             };
-            db.players.Add(pobj);
+            db2.players.Add(pobj);
 
-            db.SaveChanges();
-        }
-
-        private void refresh_Click(object sender, RoutedEventArgs e)
-        {
+            db2.SaveChanges();
             bindcombo();
         }
-
-        private long updateplayerid;
 
         private void updateplayer_Click(object sender, RoutedEventArgs e)
         {
@@ -118,8 +122,39 @@ namespace BootlegSteam
                 obj.stat.timespent = Convert.ToInt64(valtime.Text);
                 obj.stat.perfectgame = Convert.ToInt64(valperfect.Text);
                 obj.stat.acclevel = Convert.ToInt64(vallevel.Value);
+                db.SaveChanges();
             }
-            db.SaveChanges();
+            bindcombo();
+        }
+
+        private void deleteplayer_Click(object sender, RoutedEventArgs e)
+        {
+            steamdbEntities db = new steamdbEntities();
+
+            var r = from p in db.players
+                    where p.id == this.updateplayerid
+                    select p;
+
+            player obj = r.SingleOrDefault();
+
+            if (obj != null)
+            {
+                db.players.Remove(obj);
+                db.SaveChanges();
+            }
+
+            var t = from s in db.stats
+                    where s.id == obj.statid
+                    select s;
+
+            stat obj2 = t.SingleOrDefault();
+
+            if (obj2 != null)
+            {
+                db.stats.Remove(obj2);
+                db.SaveChanges();
+            }
+            bindcombo();
         }
 
         private void comboplayers_SelectionChanged(object sender, SelectionChangedEventArgs e)
