@@ -14,18 +14,12 @@ namespace BootlegSteam
     
     public partial class player
     {
-        public player()
-        {
-            this.devs = new HashSet<dev>();
-        }
-    
         public long id { get; set; }
         public string title { get; set; }
         public System.DateTime creation { get; set; }
         public long iconid { get; set; }
         public long statid { get; set; }
     
-        public virtual ICollection<dev> devs { get; set; }
         public virtual icon icon { get; set; }
         public virtual stat stat { get; set; }
     }

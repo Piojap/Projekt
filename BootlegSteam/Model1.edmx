@@ -12,7 +12,6 @@
           <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="picture" Type="varbinary(max)" Nullable="false" />
-          <Property Name="playerid" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="game">
           <Key>
@@ -51,20 +50,6 @@
           <Property Name="perfectgame" Type="bigint" Nullable="false" />
           <Property Name="acclevel" Type="bigint" Nullable="false" />
         </EntityType>
-        <Association Name="fk_dev_player">
-          <End Role="player" Type="Self.player" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="dev" Type="Self.dev" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="player">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="dev">
-              <PropertyRef Name="playerid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_game_dev">
           <End Role="dev" Type="Self.dev" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -113,10 +98,6 @@
           <EntitySet Name="icon" EntityType="Self.icon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="player" EntityType="Self.player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stat" EntityType="Self.stat" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="fk_dev_player" Association="Self.fk_dev_player">
-            <End Role="player" EntitySet="player" />
-            <End Role="dev" EntitySet="dev" />
-          </AssociationSet>
           <AssociationSet Name="fk_game_dev" Association="Self.fk_game_dev">
             <End Role="dev" EntitySet="dev" />
             <End Role="game" EntitySet="game" />
@@ -142,8 +123,6 @@
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="playerid" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="player" Relationship="Self.fk_dev_player" FromRole="dev" ToRole="player" />
           <NavigationProperty Name="games" Relationship="Self.fk_game_dev" FromRole="dev" ToRole="game" />
         </EntityType>
         <EntityType Name="game">
@@ -175,7 +154,6 @@
           <Property Name="creation" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="iconid" Type="Int64" Nullable="false" />
           <Property Name="statid" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="devs" Relationship="Self.fk_dev_player" FromRole="player" ToRole="dev" />
           <NavigationProperty Name="icon" Relationship="Self.fk_player_icon" FromRole="player" ToRole="icon" />
           <NavigationProperty Name="stat" Relationship="Self.fk_player_stat" FromRole="player" ToRole="stat" />
         </EntityType>
@@ -189,20 +167,6 @@
           <Property Name="acclevel" Type="Int64" Nullable="false" />
           <NavigationProperty Name="players" Relationship="Self.fk_player_stat" FromRole="stat" ToRole="player" />
         </EntityType>
-        <Association Name="fk_dev_player">
-          <End Role="player" Type="Self.player" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="dev" Type="Self.dev" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="player">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="dev">
-              <PropertyRef Name="playerid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_game_dev">
           <End Role="dev" Type="Self.dev" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -251,10 +215,6 @@
           <EntitySet Name="icons" EntityType="Self.icon" />
           <EntitySet Name="players" EntityType="Self.player" />
           <EntitySet Name="stats" EntityType="Self.stat" />
-          <AssociationSet Name="fk_dev_player" Association="Self.fk_dev_player">
-            <End Role="player" EntitySet="players" />
-            <End Role="dev" EntitySet="devs" />
-          </AssociationSet>
           <AssociationSet Name="fk_game_dev" Association="Self.fk_game_dev">
             <End Role="dev" EntitySet="devs" />
             <End Role="game" EntitySet="games" />
@@ -280,7 +240,6 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="picture" ColumnName="picture" />
-                <ScalarProperty Name="playerid" ColumnName="playerid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

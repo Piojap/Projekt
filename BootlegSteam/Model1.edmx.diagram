@@ -4,13 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d01d7933429c449eb2a336f4ee7a0b19" Name="Diagram1">
-        <EntityTypeShape EntityType="steamdbModel.dev" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="steamdbModel.game" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+      <Diagram DiagramId="e299a9bba59b4c178db0fdb094710f32" Name="Diagram1">
+        <EntityTypeShape EntityType="steamdbModel.dev" Width="1.5" PointX="2.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="steamdbModel.game" Width="1.5" PointX="5" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="steamdbModel.icon" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="steamdbModel.player" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="steamdbModel.stat" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
-        <AssociationConnector Association="steamdbModel.fk_dev_player" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="steamdbModel.stat" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
         <AssociationConnector Association="steamdbModel.fk_game_dev" ManuallyRouted="false" />
         <AssociationConnector Association="steamdbModel.fk_player_icon" ManuallyRouted="false" />
         <AssociationConnector Association="steamdbModel.fk_player_stat" ManuallyRouted="false" />

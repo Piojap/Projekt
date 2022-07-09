@@ -21,6 +21,10 @@ namespace BootlegSteam
     /// </summary>
     public partial class MenuGame : Window
     {
+        private string temppath;
+        private long updategameid;
+        private long combodevid;
+
         public MenuGame()
         {
             InitializeComponent();
@@ -81,25 +85,17 @@ namespace BootlegSteam
 
         private void uploadgamepic_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                Uri fileUri = new Uri(openFileDialog.FileName);
-                valgamepicture.Source = new BitmapImage(fileUri);
-            }
-        }
+            steamdbEntities db = new steamdbEntities();
 
-        private void uploaddevpic_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                Uri fileUri = new Uri(openFileDialog.FileName);
-                valdevpicture.Source = new BitmapImage(fileUri);
-            }
+            game images = new game();
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.ShowDialog();
+            openFileDialog1.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.tif;...";
+            openFileDialog1.DefaultExt = ".jpeg";
+            temppath = openFileDialog1.FileName;
+            ImageSource imageSource = new BitmapImage(new Uri(temppath));
+            valgamepicture.Source = imageSource;
         }
-
-        private long updategameid;
 
         private void addgame_Click(object sender, RoutedEventArgs e)
         {
@@ -110,7 +106,8 @@ namespace BootlegSteam
                 title = valtitle.Text,
                 creation = Convert.ToDateTime(valcreation.Text),
                 score = Convert.ToInt64(valscore.Value),
-                devid = 1
+                devid = this.combodevid,
+                picture = File.ReadAllBytes(this.temppath)
         };
             db.games.Add(gobj);
 
@@ -132,7 +129,11 @@ namespace BootlegSteam
                 obj.title = valtitle.Text;
                 obj.creation = Convert.ToDateTime(valcreation.Text);
                 obj.score = Convert.ToInt64(valscore.Value);
-                obj.devid = 1;
+                obj.devid = this.combodevid;
+                if (this.temppath != null)
+                {
+                    obj.picture = File.ReadAllBytes(this.temppath);
+                }
             }
             db.SaveChanges();
         }
@@ -156,6 +157,8 @@ namespace BootlegSteam
 
         private void combogames_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            steamdbEntities db = new steamdbEntities();
+
             game p = (game)this.combogames.SelectedItem;
             if (p != null)
             {
@@ -164,12 +167,47 @@ namespace BootlegSteam
                 valscore.Value = p.score;
                 valdev.Text = p.dev.title;
                 this.updategameid = p.id;
+
+                game image = new game();
+                var result = (from i in db.games
+                              where i.id == this.updategameid
+                              select i.picture).FirstOrDefault();
+
+                Stream stream = new MemoryStream(result);
+                BitmapImage bitobj = new BitmapImage();
+                bitobj.BeginInit();
+                bitobj.StreamSource = stream;
+                bitobj.EndInit();
+
+                this.valgamepicture.Source = bitobj;
             }
         }
 
         private void valdev_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            steamdbEntities db = new steamdbEntities();
 
+            dev d = (dev)this.valdev.SelectedItem;
+            if (d != null)
+            {
+                this.combodevid = d.id;
+
+                var r = from p in db.games
+                        where p.devid == this.combodevid
+                        select new
+                        {
+                            Title = p.title,
+                            Score = p.score
+                        };
+
+                foreach (var item in r)
+                {
+                    Console.WriteLine(item.Title);
+                    Console.WriteLine(item.Score);
+                }
+
+                this.valdevgames.ItemsSource = r.ToList();
+            }
         }
     }
 }

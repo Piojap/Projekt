@@ -59,7 +59,6 @@
             <Button Name="deletegame" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="210,0,295,0" Click="deletegame_Click"/>
             <Button x:Name="refresh" Click="refresh_Click" Height="60" Width="60" Grid.Column="3" Grid.Row="1" Margin="295,0,210,0"/>
             <Button x:Name="uploadgamepic" Click="uploadgamepic_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="3" Margin="120,0,385,0"/>
-            <Button x:Name="uploaddevpic" Click="uploaddevpic_Click" Height="60" Width="60" Grid.Column="3" Grid.Row="3" Margin="385,0,120,0"/>
 
             <ComboBox Name="combogames" DisplayMemberPath="title" SelectedValuePath="id" SelectedValue="{Binding id}" Height="60" Width="565" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="combogames_SelectionChanged"/>
 

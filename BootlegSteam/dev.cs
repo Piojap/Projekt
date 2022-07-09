@@ -22,9 +22,7 @@ namespace BootlegSteam
         public long id { get; set; }
         public string title { get; set; }
         public byte[] picture { get; set; }
-        public long playerid { get; set; }
     
-        public virtual player player { get; set; }
         public virtual ICollection<game> games { get; set; }
     }
 }
