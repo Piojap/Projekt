@@ -112,6 +112,7 @@ namespace BootlegSteam
             db.games.Add(gobj);
 
             db.SaveChanges();
+            bindcombo();
         }
 
         private void updategame_Click(object sender, RoutedEventArgs e)
@@ -136,6 +137,7 @@ namespace BootlegSteam
                 }
             }
             db.SaveChanges();
+            bindcombo();
         }
 
         private void deletegame_Click(object sender, RoutedEventArgs e)
@@ -152,6 +154,7 @@ namespace BootlegSteam
             {
                 db.games.Remove(obj);
                 db.SaveChanges();
+                bindcombo();
             }
         }
 
