@@ -12,6 +12,10 @@
           <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="picture" Type="varbinary(max)" Nullable="false" />
+          <Property Name="creation" Type="date" Nullable="false" />
+          <Property Name="country" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="popularity" Type="bigint" Nullable="false" />
+          <Property Name="age" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="game">
           <Key>
@@ -24,13 +28,6 @@
           <Property Name="picture" Type="varbinary(max)" Nullable="false" />
           <Property Name="devid" Type="bigint" Nullable="false" />
         </EntityType>
-        <EntityType Name="icon">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="picture" Type="varbinary(max)" Nullable="false" />
-        </EntityType>
         <EntityType Name="player">
           <Key>
             <PropertyRef Name="id" />
@@ -38,8 +35,8 @@
           <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="creation" Type="date" Nullable="false" />
-          <Property Name="iconid" Type="bigint" Nullable="false" />
           <Property Name="statid" Type="bigint" Nullable="false" />
+          <Property Name="picture" Type="varbinary(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="stat">
           <Key>
@@ -64,20 +61,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_player_icon">
-          <End Role="icon" Type="Self.icon" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="player" Type="Self.player" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="icon">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="player">
-              <PropertyRef Name="iconid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_player_stat">
           <End Role="stat" Type="Self.stat" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -95,16 +78,11 @@
         <EntityContainer Name="steamdbModelStoreContainer">
           <EntitySet Name="dev" EntityType="Self.dev" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="game" EntityType="Self.game" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="icon" EntityType="Self.icon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="player" EntityType="Self.player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stat" EntityType="Self.stat" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fk_game_dev" Association="Self.fk_game_dev">
             <End Role="dev" EntitySet="dev" />
             <End Role="game" EntitySet="game" />
-          </AssociationSet>
-          <AssociationSet Name="fk_player_icon" Association="Self.fk_player_icon">
-            <End Role="icon" EntitySet="icon" />
-            <End Role="player" EntitySet="player" />
           </AssociationSet>
           <AssociationSet Name="fk_player_stat" Association="Self.fk_player_stat">
             <End Role="stat" EntitySet="stat" />
@@ -123,6 +101,10 @@
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="creation" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="popularity" Type="Int64" Nullable="false" />
+          <Property Name="age" Type="Int64" Nullable="false" />
           <NavigationProperty Name="games" Relationship="Self.fk_game_dev" FromRole="dev" ToRole="game" />
         </EntityType>
         <EntityType Name="game">
@@ -137,14 +119,6 @@
           <Property Name="devid" Type="Int64" Nullable="false" />
           <NavigationProperty Name="dev" Relationship="Self.fk_game_dev" FromRole="game" ToRole="dev" />
         </EntityType>
-        <EntityType Name="icon">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <NavigationProperty Name="players" Relationship="Self.fk_player_icon" FromRole="icon" ToRole="player" />
-        </EntityType>
         <EntityType Name="player">
           <Key>
             <PropertyRef Name="id" />
@@ -152,9 +126,8 @@
           <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="creation" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="iconid" Type="Int64" Nullable="false" />
           <Property Name="statid" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="icon" Relationship="Self.fk_player_icon" FromRole="player" ToRole="icon" />
+          <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <NavigationProperty Name="stat" Relationship="Self.fk_player_stat" FromRole="player" ToRole="stat" />
         </EntityType>
         <EntityType Name="stat">
@@ -181,20 +154,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_player_icon">
-          <End Role="icon" Type="Self.icon" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="player" Type="Self.player" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="icon">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="player">
-              <PropertyRef Name="iconid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_player_stat">
           <End Role="stat" Type="Self.stat" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -212,16 +171,11 @@
         <EntityContainer Name="steamdbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="devs" EntityType="Self.dev" />
           <EntitySet Name="games" EntityType="Self.game" />
-          <EntitySet Name="icons" EntityType="Self.icon" />
           <EntitySet Name="players" EntityType="Self.player" />
           <EntitySet Name="stats" EntityType="Self.stat" />
           <AssociationSet Name="fk_game_dev" Association="Self.fk_game_dev">
             <End Role="dev" EntitySet="devs" />
             <End Role="game" EntitySet="games" />
-          </AssociationSet>
-          <AssociationSet Name="fk_player_icon" Association="Self.fk_player_icon">
-            <End Role="icon" EntitySet="icons" />
-            <End Role="player" EntitySet="players" />
           </AssociationSet>
           <AssociationSet Name="fk_player_stat" Association="Self.fk_player_stat">
             <End Role="stat" EntitySet="stats" />
@@ -240,6 +194,10 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="picture" ColumnName="picture" />
+                <ScalarProperty Name="creation" ColumnName="creation" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="popularity" ColumnName="popularity" />
+                <ScalarProperty Name="age" ColumnName="age" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -255,22 +213,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="icons">
-            <EntityTypeMapping TypeName="steamdbModel.icon">
-              <MappingFragment StoreEntitySet="icon">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="picture" ColumnName="picture" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="players">
             <EntityTypeMapping TypeName="steamdbModel.player">
               <MappingFragment StoreEntitySet="player">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="creation" ColumnName="creation" />
-                <ScalarProperty Name="iconid" ColumnName="iconid" />
                 <ScalarProperty Name="statid" ColumnName="statid" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -17,10 +17,9 @@ namespace BootlegSteam
         public long id { get; set; }
         public string title { get; set; }
         public System.DateTime creation { get; set; }
-        public long iconid { get; set; }
         public long statid { get; set; }
+        public byte[] picture { get; set; }
     
-        public virtual icon icon { get; set; }
         public virtual stat stat { get; set; }
     }
 }

@@ -22,6 +22,10 @@ namespace BootlegSteam
         public long id { get; set; }
         public string title { get; set; }
         public byte[] picture { get; set; }
+        public System.DateTime creation { get; set; }
+        public string country { get; set; }
+        public long popularity { get; set; }
+        public long age { get; set; }
     
         public virtual ICollection<game> games { get; set; }
     }

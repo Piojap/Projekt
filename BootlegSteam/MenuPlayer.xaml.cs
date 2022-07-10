@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace BootlegSteam
 {
@@ -20,6 +21,9 @@ namespace BootlegSteam
     /// </summary>
     public partial class MenuPlayer : Window
     {
+        private string temppath;
+        private long updateplayerid;
+
         public MenuPlayer()
         {
             InitializeComponent();
@@ -70,96 +74,138 @@ namespace BootlegSteam
             bindcombo();
         }
 
-        private long updateplayerid;
+        private void uploadgamepic_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                steamdbEntities db = new steamdbEntities();
+
+                player images = new player();
+                OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                openFileDialog1.ShowDialog();
+                openFileDialog1.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.tif;...";
+                openFileDialog1.DefaultExt = ".jpeg";
+                temppath = openFileDialog1.FileName;
+                ImageSource imageSource = new BitmapImage(new Uri(temppath));
+                valplayerpicture.Source = imageSource;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
+        }
 
         private void addplayer_Click(object sender, RoutedEventArgs e)
         {
-            steamdbEntities db = new steamdbEntities();
-            stat sobj = new stat()
+            try
             {
-                timespent = Convert.ToInt64(valtime.Text),
-                perfectgame = Convert.ToInt64(valperfect.Text),
-                acclevel = Convert.ToInt64(vallevel.Value)
-            };
-            db.stats.Add(sobj);
+                steamdbEntities db = new steamdbEntities();
+                stat sobj = new stat()
+                {
+                    timespent = Convert.ToInt64(valtime.Text),
+                    perfectgame = Convert.ToInt64(valperfect.Text),
+                    acclevel = Convert.ToInt64(vallevel.Value)
+                };
+                db.stats.Add(sobj);
 
-            db.SaveChanges();
-            steamdbEntities db2 = new steamdbEntities();
+                db.SaveChanges();
+                steamdbEntities db2 = new steamdbEntities();
 
-            List<stat> statlst = db2.stats.ToList();
-            var laststatlst = statlst.Last();
+                List<stat> statlst = db2.stats.ToList();
+                var laststatlst = statlst.Last();
 
-            List<icon> iconlst = db2.icons.ToList();
-            var lasticonlst = statlst.First();
+                player pobj = new player()
+                {
+                    title = valtitle.Text,
+                    creation = Convert.ToDateTime(valcreation.Text),
+                    picture = File.ReadAllBytes(this.temppath),
+                    statid = laststatlst.id,
+                };
+                db2.players.Add(pobj);
 
-            player pobj = new player()
+                db2.SaveChanges();
+                bindcombo();
+            }
+            catch (Exception ex)
             {
-                title = valtitle.Text,
-                creation = Convert.ToDateTime(valcreation.Text),
-                statid = laststatlst.id,
-                iconid = lasticonlst.id
-            };
-            db2.players.Add(pobj);
-
-            db2.SaveChanges();
-            bindcombo();
+                System.Windows.MessageBox.Show(ex.Message);
+            }
         }
 
         private void updateplayer_Click(object sender, RoutedEventArgs e)
         {
-            steamdbEntities db = new steamdbEntities();
-
-            var r = from p in db.players
-                    where p.id == this.updateplayerid
-                    select p;
-
-            player obj = r.SingleOrDefault();
-
-            if (obj != null)
+            try
             {
-                obj.title = valtitle.Text;
-                obj.creation = Convert.ToDateTime(valcreation.Text);
-                obj.stat.timespent = Convert.ToInt64(valtime.Text);
-                obj.stat.perfectgame = Convert.ToInt64(valperfect.Text);
-                obj.stat.acclevel = Convert.ToInt64(vallevel.Value);
-                db.SaveChanges();
+                steamdbEntities db = new steamdbEntities();
+
+                var r = from p in db.players
+                        where p.id == this.updateplayerid
+                        select p;
+
+                player obj = r.SingleOrDefault();
+
+                if (obj != null)
+                {
+                    obj.title = valtitle.Text;
+                    obj.creation = Convert.ToDateTime(valcreation.Text);
+                    obj.stat.timespent = Convert.ToInt64(valtime.Text);
+                    obj.stat.perfectgame = Convert.ToInt64(valperfect.Text);
+                    obj.stat.acclevel = Convert.ToInt64(vallevel.Value);
+                    if (this.temppath != null)
+                    {
+                        obj.picture = File.ReadAllBytes(this.temppath);
+                    }
+                    db.SaveChanges();
+                }
+                bindcombo();
             }
-            bindcombo();
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
         }
 
         private void deleteplayer_Click(object sender, RoutedEventArgs e)
         {
-            steamdbEntities db = new steamdbEntities();
-
-            var r = from p in db.players
-                    where p.id == this.updateplayerid
-                    select p;
-
-            player obj = r.SingleOrDefault();
-
-            if (obj != null)
+            try
             {
-                db.players.Remove(obj);
-                db.SaveChanges();
+                steamdbEntities db = new steamdbEntities();
+
+                var r = from p in db.players
+                        where p.id == this.updateplayerid
+                        select p;
+
+                player obj = r.SingleOrDefault();
+
+                if (obj != null)
+                {
+                    db.players.Remove(obj);
+                    db.SaveChanges();
+                }
+
+                var t = from s in db.stats
+                        where s.id == obj.statid
+                        select s;
+
+                stat obj2 = t.SingleOrDefault();
+
+                if (obj2 != null)
+                {
+                    db.stats.Remove(obj2);
+                    db.SaveChanges();
+                }
+                bindcombo();
             }
-
-            var t = from s in db.stats
-                    where s.id == obj.statid
-                    select s;
-
-            stat obj2 = t.SingleOrDefault();
-
-            if (obj2 != null)
+            catch (Exception ex)
             {
-                db.stats.Remove(obj2);
-                db.SaveChanges();
+                System.Windows.MessageBox.Show(ex.Message);
             }
-            bindcombo();
         }
 
         private void comboplayers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            steamdbEntities db = new steamdbEntities();
+
             player p = (player)this.comboplayers.SelectedItem;
             if (p != null)
             {
@@ -169,6 +215,29 @@ namespace BootlegSteam
                 valperfect.Text = Convert.ToString(p.stat.perfectgame);
                 vallevel.Value = p.stat.acclevel;
                 this.updateplayerid = p.id;
+
+                player image = new player();
+                var result = (from i in db.players
+                              where i.id == this.updateplayerid
+                              select i.picture).FirstOrDefault();
+
+                Stream stream = new MemoryStream(result);
+                BitmapImage bitobj = new BitmapImage();
+                bitobj.BeginInit();
+                bitobj.StreamSource = stream;
+                bitobj.EndInit();
+
+                this.valplayerpicture.Source = bitobj;
+            }
+
+            if (p == null)
+            {
+                valtitle.Text = null;
+                valcreation.Text = null;
+                valtime.Text = null;
+                valperfect.Text = null;
+                vallevel.Value = 1;
+                this.valplayerpicture.Source = null;
             }
         }
     }

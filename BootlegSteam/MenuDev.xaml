@@ -54,19 +54,28 @@
             <Button Height="25" Width="25" Click="clkmaximize" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" Margin="545,10,45,0"/>
             <Button Height="25" Width="25" Click="clkminimize" Grid.Column="3" Grid.Row="0" Margin="510,10,30,0"/>
             <Button Height="25" Width="25" Click="clkback" Grid.Column="3" Grid.Row="0" Margin="475,10,65,0"/>
-            <Button Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="30,0,475,0"/>
-            <Button Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="120,0,385,0"/>
-            <Button Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="210,0,295,0"/>
+            <Button Name="adddev" Click="adddev_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="30,0,475,0"/>
+            <Button Name="updatedev" Click="updatedev_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="120,0,385,0"/>
+            <Button Name="deletedev" Click="deletedev_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="210,0,295,0"/>
+            <Button x:Name="refresh" Click="refresh_Click" Height="60" Width="60" Grid.Column="3" Grid.Row="1" Margin="295,0,210,0"/>
+            <Button x:Name="uploaddevpic" Click="uploaddevpic_Click" Height="60" Width="60" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="3" Margin="120,0,385,0"/>
 
-            <ComboBox Height="60" Width="565" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ComboBox Name="combodevs" DisplayMemberPath="title" SelectedValuePath="id" SelectedValue="{Binding id}" Height="60" Width="565" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="combodevs_SelectionChanged"/>
 
-            <Image Height="178" Width="178" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3" VerticalAlignment="Top" Stretch="Fill"/>
+            <Image x:Name="valdevpicture" Height="178" Width="178" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3" VerticalAlignment="Top" Stretch="Fill"/>
 
             <Label Grid.Column="1" Content="USERNAME" HorizontalAlignment="Left" Grid.Row="7" Margin="308,0,0,0"/>
+            <Label Grid.Column="1" Content="AGE" HorizontalAlignment="Left" Grid.Row="9"/>
+            <Label Grid.Column="1" Content="COUNTRY" HorizontalAlignment="Left" Grid.Row="11"/>
+            <Label Grid.Column="3" Content="CREATION" HorizontalAlignment="Right" Grid.Row="9"/>
+            <Label Grid.Column="3" Content="FAN RATING" HorizontalAlignment="Right" Grid.Row="11"/>
 
-            <TextBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="7" TextWrapping="Wrap" Text="" Grid.ColumnSpan="3" Margin="472,0,0,0"/>
-            <Button Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Row="9" Width="565"/>
-            <Button Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Row="11" Width="565"/>
+            <TextBox x:Name="valtitle" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="7" TextWrapping="Wrap" Text="" Grid.ColumnSpan="3" Margin="472,0,0,0"/>
+            <TextBox x:Name="valage" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="9" TextWrapping="Wrap" Text=""/>
+            <TextBox x:Name="valcountry" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="11" TextWrapping="Wrap" Text=""/>
+            <DatePicker x:Name="valcreation" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="9" Width="400" Height="60"/>
+            <Slider x:Name="valpopularity" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="11" Width="340" Maximum="10" Minimum="1" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" Margin="0,0,0,0"/>
+            <TextBox Text="{Binding ElementName=valscore, Path=Value, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="11" Width="60" Height="60" Margin="340,0,0,0"/>
         </Grid>
     </Viewbox>
 </Window>

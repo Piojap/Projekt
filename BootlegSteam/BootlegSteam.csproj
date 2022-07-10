@@ -84,17 +84,11 @@
     <Compile Include="game.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="icon.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="MenuGame.xaml.cs">
       <DependentUpon>MenuGame.xaml</DependentUpon>
     </Compile>
     <Compile Include="MenuDev.xaml.cs">
       <DependentUpon>MenuDev.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MenuIcon.xaml.cs">
-      <DependentUpon>MenuIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="MenuMain.xaml.cs">
       <DependentUpon>MenuMain.xaml</DependentUpon>
@@ -202,10 +196,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MenuDev.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MenuIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

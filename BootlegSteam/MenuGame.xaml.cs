@@ -85,76 +85,104 @@ namespace BootlegSteam
 
         private void uploadgamepic_Click(object sender, RoutedEventArgs e)
         {
-            steamdbEntities db = new steamdbEntities();
+            try
+            {
+                steamdbEntities db = new steamdbEntities();
 
-            game images = new game();
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.ShowDialog();
-            openFileDialog1.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.tif;...";
-            openFileDialog1.DefaultExt = ".jpeg";
-            temppath = openFileDialog1.FileName;
-            ImageSource imageSource = new BitmapImage(new Uri(temppath));
-            valgamepicture.Source = imageSource;
+                game images = new game();
+                OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                openFileDialog1.ShowDialog();
+                openFileDialog1.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.tif;...";
+                openFileDialog1.DefaultExt = ".jpeg";
+                temppath = openFileDialog1.FileName;
+                ImageSource imageSource = new BitmapImage(new Uri(temppath));
+                valgamepicture.Source = imageSource;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
         }
 
         private void addgame_Click(object sender, RoutedEventArgs e)
         {
-            steamdbEntities db = new steamdbEntities();
-
-            game gobj = new game()
+            try
             {
-                title = valtitle.Text,
-                creation = Convert.ToDateTime(valcreation.Text),
-                score = Convert.ToInt64(valscore.Value),
-                devid = this.combodevid,
-                picture = File.ReadAllBytes(this.temppath)
-        };
-            db.games.Add(gobj);
+                steamdbEntities db = new steamdbEntities();
 
-            db.SaveChanges();
-            bindcombo();
+                game gobj = new game()
+                {
+                    title = valtitle.Text,
+                    creation = Convert.ToDateTime(valcreation.Text),
+                    score = Convert.ToInt64(valscore.Value),
+                    devid = this.combodevid,
+                    picture = File.ReadAllBytes(this.temppath)
+                };
+                db.games.Add(gobj);
+
+                db.SaveChanges();
+                bindcombo();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
         }
 
         private void updategame_Click(object sender, RoutedEventArgs e)
         {
-            steamdbEntities db = new steamdbEntities();
-
-            var r = from p in db.games
-                    where p.id == this.updategameid
-                    select p;
-
-            game obj = r.SingleOrDefault();
-
-            if (obj != null)
+            try
             {
-                obj.title = valtitle.Text;
-                obj.creation = Convert.ToDateTime(valcreation.Text);
-                obj.score = Convert.ToInt64(valscore.Value);
-                obj.devid = this.combodevid;
-                if (this.temppath != null)
+                steamdbEntities db = new steamdbEntities();
+
+                var r = from p in db.games
+                        where p.id == this.updategameid
+                        select p;
+
+                game obj = r.SingleOrDefault();
+
+                if (obj != null)
                 {
-                    obj.picture = File.ReadAllBytes(this.temppath);
+                    obj.title = valtitle.Text;
+                    obj.creation = Convert.ToDateTime(valcreation.Text);
+                    obj.score = Convert.ToInt64(valscore.Value);
+                    obj.devid = this.combodevid;
+                    if (this.temppath != null)
+                    {
+                        obj.picture = File.ReadAllBytes(this.temppath);
+                    }
                 }
+                db.SaveChanges();
+                bindcombo();
             }
-            db.SaveChanges();
-            bindcombo();
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
         }
 
         private void deletegame_Click(object sender, RoutedEventArgs e)
         {
-            steamdbEntities db = new steamdbEntities();
-
-            var r = from p in db.games
-                    where p.id == this.updategameid
-                    select p;
-
-            game obj = r.SingleOrDefault();
-
-            if (obj != null)
+            try
             {
-                db.games.Remove(obj);
-                db.SaveChanges();
-                bindcombo();
+                steamdbEntities db = new steamdbEntities();
+
+                var r = from p in db.games
+                        where p.id == this.updategameid
+                        select p;
+
+                game obj = r.SingleOrDefault();
+
+                if (obj != null)
+                {
+                    db.games.Remove(obj);
+                    db.SaveChanges();
+                    bindcombo();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
 
@@ -184,6 +212,15 @@ namespace BootlegSteam
 
                 this.valgamepicture.Source = bitobj;
             }
+
+            if (p == null)
+            {
+                valtitle.Text = null;
+                valcreation.Text = null;
+                valscore.Value = 1;
+                valdev.Text = null;
+                this.valgamepicture.Source = null;
+            }
         }
 
         private void valdev_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -210,6 +247,24 @@ namespace BootlegSteam
                 }
 
                 this.valdevgames.ItemsSource = r.ToList();
+
+                dev image = new dev();
+                var result = (from i in db.devs
+                              where i.id == this.combodevid
+                              select i.picture).FirstOrDefault();
+
+                Stream stream = new MemoryStream(result);
+                BitmapImage bitobj = new BitmapImage();
+                bitobj.BeginInit();
+                bitobj.StreamSource = stream;
+                bitobj.EndInit();
+
+                this.valdevpicture.Source = bitobj;
+            }
+            if (d == null)
+            {
+                this.valdevgames.ItemsSource = null;
+                this.valdevpicture.Source = null;
             }
         }
     }

@@ -45,13 +45,6 @@ namespace BootlegSteam
             open.Show();
         }
 
-        private void clkmenuicon(object sender, RoutedEventArgs e)
-        {
-            MenuIcon open = new MenuIcon();
-            this.Visibility = Visibility.Hidden;
-            open.Show();
-        }
-
         private void clkclose(object sender, RoutedEventArgs e)
         {
             Close();

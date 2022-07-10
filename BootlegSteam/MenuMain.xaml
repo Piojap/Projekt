@@ -15,29 +15,28 @@
         <Grid ShowGridLines="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10"></ColumnDefinition>
-                <ColumnDefinition Width="355"></ColumnDefinition>
-                <ColumnDefinition Width="250"></ColumnDefinition>
+                <ColumnDefinition Width="130"></ColumnDefinition>
+                <ColumnDefinition Width="300"></ColumnDefinition>
                 <ColumnDefinition Width="50"></ColumnDefinition>
-                <ColumnDefinition Width="250"></ColumnDefinition>
-                <ColumnDefinition Width="355"></ColumnDefinition>
+                <ColumnDefinition Width="300"></ColumnDefinition>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+                <ColumnDefinition Width="300"></ColumnDefinition>
+                <ColumnDefinition Width="130"></ColumnDefinition>
                 <ColumnDefinition Width="10"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"></RowDefinition>
-                <RowDefinition Height="50"></RowDefinition>
-                <RowDefinition Height="250"></RowDefinition>
-                <RowDefinition Height="50"></RowDefinition>
-                <RowDefinition Height="250"></RowDefinition>
-                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="175"></RowDefinition>
+                <RowDefinition Height="300"></RowDefinition>
+                <RowDefinition Height="175"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Height="250" Width="250" Grid.Row="2" Grid.Column="2" Click="clkmenuplayer"/>
-            <Button Height="250" Width="250" Grid.Row="2" Grid.Column="4" Click="clkmenugame"/>
-            <Button Height="250" Width="250" Grid.Row="4" Grid.Column="2" Click="clkmenudev"/>
-            <Button Height="250" Width="250" Grid.Row="4" Grid.Column="4" Click="clkmenuicon"/>
-            <Button Height="25" Width="25" Margin="330,10,0,0" Click="clkclose" Grid.Column="5" Grid.Row="0"/>
-            <Button Height="25" Width="25" Margin="295,10,35,0" Click="clkmaximize" Grid.Column="5" Grid.Row="0"/>
-            <Button Height="25" Width="25" Margin="260,10,70,0" Click="clkminimize" Grid.Column="5" Grid.Row="0"/>
+            <Button Height="300" Width="300" Grid.Row="2" Grid.Column="2" Click="clkmenuplayer"/>
+            <Button Height="300" Width="300" Grid.Row="2" Grid.Column="4" Click="clkmenugame"/>
+            <Button Height="300" Width="300" Grid.Row="2" Grid.Column="6" Click="clkmenudev"/>
+            <Button Height="25" Width="25" Margin="105,10,0,0" Click="clkclose" Grid.Column="7" Grid.Row="0"/>
+            <Button Height="25" Width="25" Margin="70,10,35,0" Click="clkmaximize" Grid.Column="7" Grid.Row="0"/>
+            <Button Height="25" Width="25" Margin="35,10,70,0" Click="clkminimize" Grid.Column="7" Grid.Row="0"/>
         </Grid>
     </Viewbox>    
 </Window>
