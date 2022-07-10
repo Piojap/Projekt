@@ -97,7 +97,7 @@ namespace BootlegSteam
 
         private void addplayer_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if(!string.IsNullOrWhiteSpace(valtitle.Text) && !string.IsNullOrWhiteSpace(valcreation.Text) && !string.IsNullOrWhiteSpace(valtime.Text) && !string.IsNullOrWhiteSpace(valperfect.Text) && valplayerpicture.Source != null)
             {
                 steamdbEntities db = new steamdbEntities();
                 stat sobj = new stat()
@@ -126,15 +126,16 @@ namespace BootlegSteam
                 db2.SaveChanges();
                 bindcombo();
             }
-            catch (Exception ex)
+            else
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                MenuWarning open = new MenuWarning();
+                open.Show();
             }
         }
 
         private void updateplayer_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (!string.IsNullOrWhiteSpace(valtitle.Text) && !string.IsNullOrWhiteSpace(valcreation.Text) && !string.IsNullOrWhiteSpace(valtime.Text) && !string.IsNullOrWhiteSpace(valperfect.Text) && valplayerpicture.Source != null)
             {
                 steamdbEntities db = new steamdbEntities();
 
@@ -159,9 +160,10 @@ namespace BootlegSteam
                 }
                 bindcombo();
             }
-            catch (Exception ex)
+            else
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                MenuWarning open = new MenuWarning();
+                open.Show();
             }
         }
 

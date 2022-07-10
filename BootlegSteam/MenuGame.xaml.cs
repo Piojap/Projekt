@@ -106,7 +106,7 @@ namespace BootlegSteam
 
         private void addgame_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (!string.IsNullOrWhiteSpace(valtitle.Text) && !string.IsNullOrWhiteSpace(valcreation.Text) && valgamepicture.Source != null)
             {
                 steamdbEntities db = new steamdbEntities();
 
@@ -123,15 +123,16 @@ namespace BootlegSteam
                 db.SaveChanges();
                 bindcombo();
             }
-            catch (Exception ex)
+            else
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                MenuWarning open = new MenuWarning();
+                open.Show();
             }
         }
 
         private void updategame_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (!string.IsNullOrWhiteSpace(valtitle.Text) && !string.IsNullOrWhiteSpace(valcreation.Text) && valgamepicture.Source != null)
             {
                 steamdbEntities db = new steamdbEntities();
 
@@ -155,9 +156,10 @@ namespace BootlegSteam
                 db.SaveChanges();
                 bindcombo();
             }
-            catch (Exception ex)
+            else
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                MenuWarning open = new MenuWarning();
+                open.Show();
             }
         }
 
