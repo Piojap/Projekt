@@ -12,7 +12,8 @@
         Width="1280"
         Title="MenuMain">
     <Viewbox>
-        <Grid ShowGridLines="True">
+        <Grid Background="#FF464646">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10"></ColumnDefinition>
                 <ColumnDefinition Width="130"></ColumnDefinition>
@@ -24,6 +25,7 @@
                 <ColumnDefinition Width="130"></ColumnDefinition>
                 <ColumnDefinition Width="10"></ColumnDefinition>
             </Grid.ColumnDefinitions>
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"></RowDefinition>
                 <RowDefinition Height="175"></RowDefinition>
@@ -31,12 +33,314 @@
                 <RowDefinition Height="175"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Height="300" Width="300" Grid.Row="2" Grid.Column="2" Click="clkmenuplayer"/>
-            <Button Height="300" Width="300" Grid.Row="2" Grid.Column="4" Click="clkmenugame"/>
-            <Button Height="300" Width="300" Grid.Row="2" Grid.Column="6" Click="clkmenudev"/>
-            <Button Height="25" Width="25" Margin="105,10,0,0" Click="clkclose" Grid.Column="7" Grid.Row="0"/>
-            <Button Height="25" Width="25" Margin="70,10,35,0" Click="clkmaximize" Grid.Column="7" Grid.Row="0"/>
-            <Button Height="25" Width="25" Margin="35,10,70,0" Click="clkminimize" Grid.Column="7" Grid.Row="0"/>
+
+            <Button Height="300" Width="300" Grid.Row="2" Grid.Column="2" Click="clkmenuplayer">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconUser.png" Width="180"/>
+                </StackPanel>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="50"/>
+                        <Setter Property="BorderThickness" Value="10"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Height="300" Width="300" Grid.Row="2" Grid.Column="4" Click="clkmenugame">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconGame.png" Width="200"/>
+                </StackPanel>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="50"/>
+                        <Setter Property="BorderThickness" Value="10"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Height="300" Width="300" Grid.Row="2" Grid.Column="6" Click="clkmenudev">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconDev.png" Width="200"/>
+                </StackPanel>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="50"/>
+                        <Setter Property="BorderThickness" Value="10"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Height="25" Width="25" Margin="105,10,0,0" Click="clkclose" Grid.Column="7" Grid.Row="0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="1"/>
+                        <Setter Property="BorderThickness" Value="2"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Height="25" Width="25" Margin="70,10,35,0" Click="clkmaximize" Grid.Column="7" Grid.Row="0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="1"/>
+                        <Setter Property="BorderThickness" Value="2"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Height="25" Width="25" Margin="35,10,70,0" Click="clkminimize" Grid.Column="7" Grid.Row="0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="1"/>
+                        <Setter Property="BorderThickness" Value="2"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Label Content="BOOTLEGSTEAM EDITOR" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" Height="100" Width="400" VerticalAlignment="Center" FontSize="32" FontWeight="Normal" FontFamily="Bahnschrift" Foreground="White">
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Label}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Label.Style>
+                <Label.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25"/>
+                        <Setter Property="BorderThickness" Value="10"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Label.Resources>
+            </Label>
+            <Label Content="PLAYERS" Grid.Row="3" Grid.Column="2" Height="100" Width="300" VerticalAlignment="Center" Foreground="White" FontSize="32" FontFamily="Bahnschrift">
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Label}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Label.Style>
+                <Label.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25"/>
+                        <Setter Property="BorderThickness" Value="10"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Label.Resources>
+            </Label>
+            <Label Content="GAMES" Grid.Row="3" Grid.Column="4" Height="100" Width="300" VerticalAlignment="Center" FontFamily="Bahnschrift" FontSize="32" Foreground="White">
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Label}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Label.Style>
+                <Label.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25"/>
+                        <Setter Property="BorderThickness" Value="10"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Label.Resources>
+            </Label>
+            <Label Content="DEVELOPERS" Grid.Row="3" Grid.Column="6" Height="100" Width="300" VerticalAlignment="Center" Foreground="White" FontSize="32" FontFamily="Bahnschrift">
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Label}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Label.Style>
+                <Label.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="25"/>
+                        <Setter Property="BorderThickness" Value="10"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Label.Resources>
+            </Label>
+
+
         </Grid>
-    </Viewbox>    
+    </Viewbox>
 </Window>
