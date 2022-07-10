@@ -146,6 +146,9 @@
                 </Button.Resources>
             </Button>
             <Button Height="25" Width="25" Margin="105,10,0,0" Click="clkclose" Grid.Column="7" Grid.Row="0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconClose.png" Width="13"/>
+                </StackPanel>
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="#FFD24900"/>
@@ -180,6 +183,9 @@
                 </Button.Resources>
             </Button>
             <Button Height="25" Width="25" Margin="70,10,35,0" Click="clkmaximize" Grid.Column="7" Grid.Row="0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconFull.png" Width="20"/>
+                </StackPanel>
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="#FFD24900"/>
@@ -214,6 +220,9 @@
                 </Button.Resources>
             </Button>
             <Button Height="25" Width="25" Margin="35,10,70,0" Click="clkminimize" Grid.Column="7" Grid.Row="0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconMini.png" Width="20"/>
+                </StackPanel>
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="#FFD24900"/>
