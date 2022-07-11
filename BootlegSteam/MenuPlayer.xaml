@@ -11,8 +11,175 @@
         Height="720"
         Width="1280"
         Title="MenuPlayer">
+
+    <Window.Resources>
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                <Border
+                  x:Name="Border" 
+                  Grid.ColumnSpan="2"
+                  CornerRadius="10"
+                  Background="#FFD24900"
+                  BorderBrush="#FF7300"
+                  BorderThickness="5" />
+                <Border 
+                  Grid.Column="0"
+                  CornerRadius="10" 
+                  Margin="1,1,19,1" 
+                  Background="#FFD24900" 
+                  BorderBrush="#FF7300"
+                  BorderThickness="5,5,5,5" />
+                <Path 
+                  x:Name="Arrow"     
+                  Fill="White"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
+                  Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z" Margin="531,0,0,0" Height="18" Stretch="Fill" Width="24" Grid.ColumnSpan="2"
+                />
+            </Grid>
+            <!--<ControlTemplate.Triggers>
+            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#808080" />
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#E0E0E0" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="#AAAAAA" />
+                <Setter Property="Foreground" Value="#888888"/>
+                <Setter TargetName="Arrow" Property="Fill" Value="#888888" />
+            </Trigger>
+        </ControlTemplate.Triggers>-->
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
+            <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}" />
+        </ControlTemplate>
+
+        <Style x:Key="{x:Type ComboBox}" TargetType="{x:Type ComboBox}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="MinHeight" Value="20"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Bahnschrift"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid>
+                            <ToggleButton 
+                            Name="ToggleButton" 
+                            Template="{StaticResource ComboBoxToggleButton}" 
+                            Grid.Column="2" 
+                            Focusable="false"
+                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                            ClickMode="Press">
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            Margin="15,0,0,0"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left" />
+                            <TextBox x:Name="PART_EditableTextBox"
+                            Style="{x:Null}" 
+                            Template="{StaticResource ComboBoxTextBox}" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Center" 
+                            Margin="3,3,23,3"
+                            Focusable="True" 
+                            Background="#FF3F3F3F"
+                            Foreground="Green"
+                            Visibility="Hidden"
+                            IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                            <Popup 
+                            Name="Popup"
+                            Placement="Bottom"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            AllowsTransparency="True" 
+                            Focusable="False"
+                            PopupAnimation="Slide">
+
+                                <Grid Name="DropDown"
+                              SnapsToDevicePixels="True"                
+                              MinWidth="{TemplateBinding ActualWidth}"
+                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border 
+                                x:Name="DropDownBorder"
+                                Background="#FFD24900"
+                                CornerRadius="10"
+                                BorderThickness="1"
+                                BorderBrush="#FF7300"/>
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </Trigger>
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                                <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0"/>
+                                <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsEditable"  Value="true">
+                                <Setter Property="IsTabStop" Value="false"/>
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+            </Style.Triggers>
+        </Style>
+
+        <!-- SimpleStyles: ComboBoxItem -->
+        <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                        <Border Name="Border"
+                              Padding="2"
+                              SnapsToDevicePixels="true">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#FF7300"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Viewbox>
-        <Grid ShowGridLines="True">
+        <Grid Background="#FF464646">
             <Grid.Resources>
                 <Style TargetType="Label">
                     <Setter Property="Height" Value="60"/>
@@ -50,32 +217,500 @@
                 <RowDefinition Height="35"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Button Height="25" Width="25" Click="clkclose" Grid.Column="4" Grid.Row="0" Margin="15,10,10,0" />
-            <Button Height="25" Width="25" Click="clkmaximize" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" Margin="545,10,45,0"/>
-            <Button Height="25" Width="25" Click="clkminimize" Grid.Column="3" Grid.Row="0" Margin="510,10,30,0"/>
-            <Button Height="25" Width="25" Click="clkback" Grid.Column="3" Grid.Row="0" Margin="475,10,65,0"/>
-            <Button x:Name="addplayer" Click="addplayer_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="30,0,475,0"/>
-            <Button x:Name="updateplayer" Click="updateplayer_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="120,0,385,0"/>
-            <Button x:Name="deleteplayer" Click="deleteplayer_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="210,0,295,0"/>
-            <Button x:Name="refresh" Click="refresh_Click" Height="60" Width="60" Grid.Column="3" Grid.Row="1" Margin="295,0,210,0"/>
-            <Button x:Name="uploadplayerpic" Click="uploadgamepic_Click" Height="60" Width="60" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="3" Margin="120,0,385,0"/>
+            <Button Height="25" Width="25" Click="clkclose" Grid.Column="4" Grid.Row="0" Margin="15,10,10,0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconClose.png" Width="13"/>
+                </StackPanel>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="1"/>
+                        <Setter Property="BorderThickness" Value="2"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Height="25" Width="25" Click="clkmaximize" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" Margin="545,10,45,0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconFull.png" Width="20"/>
+                </StackPanel>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="1"/>
+                        <Setter Property="BorderThickness" Value="2"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Height="25" Width="25" Click="clkminimize" Grid.Column="3" Grid.Row="0" Margin="510,10,30,0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconMini.png" Width="20"/>
+                </StackPanel>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="1"/>
+                        <Setter Property="BorderThickness" Value="2"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Height="25" Width="25" Click="clkback" Grid.Column="3" Grid.Row="0" Margin="475,10,65,0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconBack.png" Width="8"/>
+                </StackPanel>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="1"/>
+                        <Setter Property="BorderThickness" Value="2"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="addplayer" Click="addplayer_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="30,0,475,0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconUser.png" Width="40"/>
+                </StackPanel>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                        <Setter Property="BorderThickness" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="updateplayer" Click="updateplayer_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="120,0,385,0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconUser.png" Width="40"/>
+                </StackPanel>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                        <Setter Property="BorderThickness" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="deleteplayer" Click="deleteplayer_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="210,0,295,0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconUser.png" Width="40"/>
+                </StackPanel>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                        <Setter Property="BorderThickness" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="refresh" Click="refresh_Click" Height="60" Width="60" Grid.Column="3" Grid.Row="1" Margin="295,0,210,0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconUser.png" Width="40"/>
+                </StackPanel>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                        <Setter Property="BorderThickness" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="uploadplayerpic" Click="uploadgamepic_Click" Height="60" Width="60" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="3" Margin="120,0,385,0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="iconUser.png" Width="40"/>
+                </StackPanel>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                        <Setter Property="BorderThickness" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
 
-            <ComboBox Name="comboplayers" DisplayMemberPath="title" SelectedValuePath="id" SelectedValue="{Binding id}" Height="60" Width="565" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="comboplayers_SelectionChanged"/>
+            <ComboBox Name="comboplayers" DisplayMemberPath="title" SelectedValuePath="id" SelectedValue="{Binding id}" Height="60" Width="565" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="comboplayers_SelectionChanged">
+            </ComboBox>
 
             <Image x:Name="valplayerpicture" Height="178" Width="178" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3" VerticalAlignment="Top" Stretch="Fill"/>
 
-            <Label Grid.Column="1" Content="USERNAME" HorizontalAlignment="Left" Grid.Row="7"/>
-            <Label Grid.Column="1" Content="CREATION" HorizontalAlignment="Left" Grid.Row="9"/>
-            <Label Grid.Column="3" Content="TIME SPENT" HorizontalAlignment="Right" Grid.Row="7"/>
-            <Label Grid.Column="3" Content="PERFECT GAMES" HorizontalAlignment="Right" Grid.Row="9"/>
-            <Label Grid.Column="3" Content="LEVEL" HorizontalAlignment="Left" Grid.Row="11" Margin="143,0,0,0"/>
+            <Label Grid.Column="1" HorizontalAlignment="Left" Grid.Row="7" Width="115">
+                <TextBlock Background="{x:Null}" Foreground="White" FontFamily="Bahnschrift" FontSize="18">
+                    USERNAME
+                </TextBlock>
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Label}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Label.Style>
+                <Label.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                        <Setter Property="BorderThickness" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Label.Resources>
+            </Label>
+            <Label Grid.Column="1" HorizontalAlignment="Left" Grid.Row="9" Width="115">
+                <TextBlock Background="{x:Null}" Foreground="White" FontFamily="Bahnschrift" FontSize="18" TextAlignment="Center">
+                    ACCOUNT
+                    <LineBreak/>
+                    CREATION
+                </TextBlock>
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Label}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Label.Style>
+                <Label.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                        <Setter Property="BorderThickness" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Label.Resources>
+            </Label>
+            <Label Grid.Column="3" HorizontalAlignment="Right" Grid.Row="7" Width="115">
+                <TextBlock Background="{x:Null}" Foreground="White" FontFamily="Bahnschrift" FontSize="18" TextAlignment="Center">
+                    HOURS
+                    <LineBreak/>
+                    PLAYED
+                </TextBlock>
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Label}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Label.Style>
+                <Label.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                        <Setter Property="BorderThickness" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Label.Resources>
+            </Label>
+            <Label Grid.Column="3" HorizontalAlignment="Right" Grid.Row="9" Width="115">
+                <TextBlock Background="{x:Null}" Foreground="White" FontFamily="Bahnschrift" FontSize="18" TextAlignment="Center">
+                    PERFECT
+                    <LineBreak/>
+                    GAMES
+                </TextBlock>
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Label}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Label.Style>
+                <Label.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                        <Setter Property="BorderThickness" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Label.Resources>
+            </Label>
+            <Label Grid.Column="3" HorizontalAlignment="Left" Grid.Row="11" Margin="143,0,0,0" Width="115">
+                <TextBlock Background="{x:Null}" Foreground="White" FontFamily="Bahnschrift" FontSize="18" TextAlignment="Center">
+                    ACCOUNT
+                    <LineBreak/>
+                    LEVEL
+                </TextBlock>
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Label}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Label.Style>
+                <Label.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                        <Setter Property="BorderThickness" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Label.Resources>
+            </Label>
 
-            <TextBox x:Name="valtitle" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="7" TextWrapping="Wrap" Text=""/>
-            <DatePicker x:Name="valcreation" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="9" Width="400" Height="60"/>
-            <TextBox x:Name="valtime" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="7" TextWrapping="Wrap" Text=""/>
-            <TextBox x:Name="valperfect" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="9" TextWrapping="Wrap" Text=""/>
-            <Slider x:Name="vallevel"  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="11" Width="340" Maximum="80" Minimum="1" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" Grid.ColumnSpan="3" Margin="308,0,0,0"/>
-            <TextBox Text="{Binding ElementName=vallevel, Path=Value, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="11" Margin="33,0,0,0" Width="60" Height="60"/>
+            <Border Grid.Column="1" Grid.Row="7" BorderThickness="5" BorderBrush="#FF7300" Width="410" HorizontalAlignment="Right" CornerRadius="10">
+                <TextBox x:Name="valtitle" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="7" TextWrapping="Wrap" Text="" Width="400" Background="#FFD24900" BorderThickness="0" SelectionBrush="#FF7300" FontFamily="Bahnschrift" FontSize="18" Foreground="White" VerticalContentAlignment="Center" />
+            </Border>
+            <Border Grid.Column="1" Grid.Row="9" BorderThickness="5" BorderBrush="#FF7300" Width="410" HorizontalAlignment="Right" CornerRadius="10">
+                <DatePicker Style="{DynamicResource DatePickerStyle1}" x:Name="valcreation" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="9" Width="400" Height="50"/>
+            </Border>
+            <Border Grid.Column="3" Grid.Row="7" BorderThickness="5" BorderBrush="#FF7300" Width="410" HorizontalAlignment="Left" CornerRadius="10">
+                <TextBox x:Name="valtime" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="7" TextWrapping="Wrap" Text="" Background="#FFD24900" BorderThickness="0" SelectionBrush="#FF7300" FontFamily="Bahnschrift" FontSize="18" Foreground="White" VerticalContentAlignment="Center"/>
+            </Border>
+            <Border Grid.Column="3" Grid.Row="9" BorderThickness="5" BorderBrush="#FF7300" Width="410" HorizontalAlignment="Left" CornerRadius="10">
+                <TextBox x:Name="valperfect" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="9" TextWrapping="Wrap" Text="" Background="#FFD24900" BorderThickness="0" SelectionBrush="#FF7300" FontFamily="Bahnschrift" FontSize="18" Foreground="White" VerticalContentAlignment="Center"/>
+            </Border>
+            <Slider Template="{DynamicResource SliderStyle1}" x:Name="vallevel"  Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="11" Width="340" Maximum="80" Minimum="1" TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" Grid.ColumnSpan="3" Margin="308,0,0,0"/>
+            <Border Grid.Column="3" Grid.Row="11" BorderThickness="5" BorderBrush="#FF7300" Width="60" HorizontalAlignment="Left" CornerRadius="10" Margin="33,0,0,0">
+                <TextBox Text="{Binding ElementName=vallevel, Path=Value, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="11" Width="60" Height="60" Background="#FFD24900" BorderThickness="0" SelectionBrush="#FF7300" FontFamily="Bahnschrift" FontSize="32" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            </Border>
         </Grid>
     </Viewbox>
 </Window>
