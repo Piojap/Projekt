@@ -367,7 +367,7 @@
             </Button>
             <Button x:Name="addplayer" Click="addplayer_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="30,0,475,0">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="iconUser.png" Width="40"/>
+                    <Image Source="iconPlus.png" Width="40"/>
                 </StackPanel>
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
@@ -404,7 +404,7 @@
             </Button>
             <Button x:Name="updateplayer" Click="updateplayer_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="120,0,385,0">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="iconUser.png" Width="40"/>
+                    <Image Source="iconEdit.png" Width="40"/>
                 </StackPanel>
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
@@ -441,7 +441,7 @@
             </Button>
             <Button x:Name="deleteplayer" Click="deleteplayer_Click" Height="60" Width="60" Grid.Column="1" Grid.Row="1" Margin="210,0,295,0">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="iconUser.png" Width="40"/>
+                    <Image Source="iconDelete.png" Width="40"/>
                 </StackPanel>
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
@@ -478,7 +478,7 @@
             </Button>
             <Button x:Name="refresh" Click="refresh_Click" Height="60" Width="60" Grid.Column="3" Grid.Row="1" Margin="295,0,210,0">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="iconUser.png" Width="40"/>
+                    <Image Source="iconRefresh.png" Width="40"/>
                 </StackPanel>
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
@@ -515,7 +515,7 @@
             </Button>
             <Button x:Name="uploadplayerpic" Click="uploadgamepic_Click" Height="60" Width="60" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="3" Margin="120,0,385,0">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="iconUser.png" Width="40"/>
+                    <Image Source="iconPhoto.png" Width="40"/>
                 </StackPanel>
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
@@ -554,7 +554,12 @@
             <ComboBox Name="comboplayers" DisplayMemberPath="title" SelectedValuePath="id" SelectedValue="{Binding id}" Height="60" Width="565" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="comboplayers_SelectionChanged">
             </ComboBox>
 
-            <Image x:Name="valplayerpicture" Height="178" Width="178" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3" VerticalAlignment="Top" Stretch="Fill"/>
+            <Border Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3" Width="178" Height="178" BorderThickness="5" BorderBrush="#FF7300" CornerRadius="10" Background="#FFD24900">
+                <Image Source="iconTemp.png" Height="140" Width="100" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Center" Stretch="Fill" Grid.RowSpan="3" Margin="34,0,34,0"/>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3" Width="178" Height="178" BorderThickness="5" BorderBrush="#FF7300" CornerRadius="10">
+                <Image x:Name="valplayerpicture" Height="168" Width="168" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3" VerticalAlignment="Top" Stretch="Fill"/>
+            </Border>
 
             <Label Grid.Column="1" HorizontalAlignment="Left" Grid.Row="7" Width="115">
                 <TextBlock Background="{x:Null}" Foreground="White" FontFamily="Bahnschrift" FontSize="18">
