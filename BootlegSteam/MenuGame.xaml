@@ -704,7 +704,7 @@
                 <TextBox Text="{Binding ElementName=valscore, Path=Value, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="11" Width="60" Height="60" Background="#FFD24900" BorderThickness="0" SelectionBrush="#FF7300" FontFamily="Bahnschrift" FontSize="32" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
             </Border>
             <ComboBox x:Name="valdev" DisplayMemberPath="title" SelectedValuePath="id" SelectedValue="{Binding id}" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="7" Width="400" SelectionChanged="valdev_SelectionChanged"/>
-            <DataGrid x:Name="valdevgames" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="9" Grid.RowSpan="3" Width="400"/>
+            <DataGrid AutoGeneratingColumn="valdevgames_AutoGeneratingColumn" Style="{DynamicResource DataGridStyle1}" x:Name="valdevgames" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="9" Grid.RowSpan="3" Width="400"/>
         </Grid>
     </Viewbox>
 </Window>

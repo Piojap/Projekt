@@ -238,14 +238,16 @@ namespace BootlegSteam
                         where p.devid == this.combodevid
                         select new
                         {
+                            Score = p.score,
                             Title = p.title,
-                            Score = p.score
+                            Creation = p.creation
                         };
 
                 foreach (var item in r)
                 {
-                    Console.WriteLine(item.Title);
                     Console.WriteLine(item.Score);
+                    Console.WriteLine(item.Title);
+                    Console.WriteLine(item.Creation);
                 }
 
                 this.valdevgames.ItemsSource = r.ToList();
@@ -268,6 +270,12 @@ namespace BootlegSteam
                 this.valdevgames.ItemsSource = null;
                 this.valdevpicture.Source = null;
             }
+        }
+
+        private void valdevgames_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.PropertyType == typeof(System.DateTime))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "dd/MM/yyyy";
         }
     }
 }
