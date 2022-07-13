@@ -10,12 +10,13 @@
         Height="180"
         Width="320"
         Title="MenuWarning">
+    <Border BorderBrush="#FF7300" BorderThickness="10" Width="320" Height="180">
     <Viewbox>
-        <Grid ShowGridLines="True">
+        <Grid Background="#FF464646">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"></ColumnDefinition>
-                <ColumnDefinition Width="280"></ColumnDefinition>
+                <ColumnDefinition Width="300"></ColumnDefinition>
                 <ColumnDefinition Width="20"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
@@ -25,8 +26,70 @@
                 <RowDefinition Height="20"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Label Content="ENTER ALL THE DATA" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="280" Height="40" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontWeight="Bold"/>
-            <Button Click="closewarning_Click" Content="OK" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="20" Margin="0,105,0,0"/>
+            <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="280" Height="40" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontWeight="Bold">
+                <TextBlock Background="{x:Null}" Foreground="White" FontFamily="Bahnschrift" FontSize="18">
+                    !!! ENTER ALL THE DATA !!!
+                </TextBlock>
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Label}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Label.Style>
+                <Label.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                        <Setter Property="BorderThickness" Value="5"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Label.Resources>
+            </Label>
+            <Button Click="closewarning_Click" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="20" Margin="0,105,0,0" Foreground="White" FontFamily="Bahnschrift" FontSize="18">
+                <TextBlock Background="{x:Null}" Foreground="White" FontFamily="Bahnschrift" FontSize="15">
+                    OK
+                </TextBlock>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFD24900"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFD24900"/>
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                        <Setter Property="BorderThickness" Value="2.5"/>
+                        <Setter Property="BorderBrush" Value="#FF7300"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </Grid>
     </Viewbox>
+    </Border>
 </Window>

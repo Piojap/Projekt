@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace BootlegSteam
 {
@@ -21,15 +17,23 @@ namespace BootlegSteam
     /// </summary>
     public partial class MenuPlayer : Window
     {
+        // Class accesible photo upload path
         private string temppath;
+        // Class accesible currently chosen player id
         private long updateplayerid;
 
+        /// <summary>
+        /// WPF Elements initialization
+        /// </summary>
         public MenuPlayer()
         {
             InitializeComponent();
             bindcombo();
         }
 
+        /// <summary>
+        /// Updates the combobox with a list of players from database
+        /// </summary>
         private void bindcombo()
         {
             steamdbEntities db = new steamdbEntities();
@@ -37,12 +41,22 @@ namespace BootlegSteam
             comboplayers.ItemsSource = lst;
         }
 
+        /// <summary>
+        /// Logic for closing the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void clkclose(object sender, RoutedEventArgs e)
         {
             Close();
             App.Current.Shutdown();
         }
 
+        /// <summary>
+        /// Logic for maximizing/windowed the application window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void clkmaximize(object sender, RoutedEventArgs e)
         {
             if (WindowState == WindowState.Maximized)
@@ -51,17 +65,32 @@ namespace BootlegSteam
                 WindowState = WindowState.Maximized;
         }
 
+        /// <summary>
+        /// Logic for minimizing the application window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void clkminimize(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
         }
 
+        /// <summary>
+        /// Logic allowing dragging the application window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dragwindow(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
         }
 
+        /// <summary>
+        /// Logic for going back to the Main Menu window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void clkback(object sender, RoutedEventArgs e)
         {
             MenuMain open = new MenuMain();
@@ -69,11 +98,21 @@ namespace BootlegSteam
             Close();
         }
 
+        /// <summary>
+        /// Logic for refreshing the combobox players list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void refresh_Click(object sender, RoutedEventArgs e)
         {
             bindcombo();
         }
 
+        /// <summary>
+        /// Updates the WPF image with an image chosen by the user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void uploadgamepic_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -95,6 +134,11 @@ namespace BootlegSteam
             }
         }
 
+        /// <summary>
+        /// Adds a new player in the database and edits linked statistics
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addplayer_Click(object sender, RoutedEventArgs e)
         {
             if(!string.IsNullOrWhiteSpace(valtitle.Text) && !string.IsNullOrWhiteSpace(valcreation.Text) && !string.IsNullOrWhiteSpace(valtime.Text) && !string.IsNullOrWhiteSpace(valperfect.Text) && valplayerpicture.Source != null)
@@ -133,6 +177,11 @@ namespace BootlegSteam
             }
         }
 
+        /// <summary>
+        /// Updates a chosen player from combobox and his statistics in the database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void updateplayer_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(valtitle.Text) && !string.IsNullOrWhiteSpace(valcreation.Text) && !string.IsNullOrWhiteSpace(valtime.Text) && !string.IsNullOrWhiteSpace(valperfect.Text) && valplayerpicture.Source != null)
@@ -167,6 +216,11 @@ namespace BootlegSteam
             }
         }
 
+        /// <summary>
+        /// Deletes a chosen player from combobox and his statistics from the database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteplayer_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -204,6 +258,11 @@ namespace BootlegSteam
             }
         }
 
+        /// <summary>
+        /// Logic behind filling the UI with information from the database based on the combobox item selected by the user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboplayers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             steamdbEntities db = new steamdbEntities();
@@ -241,6 +300,17 @@ namespace BootlegSteam
                 vallevel.Value = 1;
                 this.valplayerpicture.Source = null;
             }
+        }
+
+        /// <summary>
+        /// Logic that allows only numbers in certain WPF textboxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void acceptNumbers(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
